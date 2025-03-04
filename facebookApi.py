@@ -14,7 +14,7 @@ def get_facebook_stream_key():
     params = {
         "access_token": ACCESS_TOKEN,
         "status": "LIVE_NOW",
-        "fields": "id,stream_url,secure_stream_url"
+        "fields": "id,stream_url, secure_stream_url"
     }
     response = requests.post(url, params=params)
     data = response.json()
@@ -26,10 +26,24 @@ def get_facebook_stream_key():
         return None, None
 
     stream_url = data.get("stream_url")
-    stream_key = data.get("stream_key")
 
-    return stream_url, stream_key
+    if not stream_url:
+        print("⚠️ No secure stream URL found in API response.")
+        return None
 
-stream_url, stream_key = get_facebook_stream_key()
-print(f"Stream URL: {stream_url}")
+    # Extract the stream key (the part after '/rtmp/')
+    stream_key = stream_url.split("/")[-1]
+
+    return stream_key
+
+    # stream_url = data.get("stream_url")
+    # stream_key = data.get("stream_key")
+
+    # return stream_url, stream_key
+
+
+# stream_url, stream_key = get_facebook_stream_key()
+stream_key = get_facebook_stream_key()
+
+# print(f"Stream URL: {stream_url}")
 print(f"Stream Key: {stream_key}")
