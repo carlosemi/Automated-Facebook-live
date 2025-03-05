@@ -36,6 +36,7 @@ def update_obs_stream_settings(stream_url):
             type="rtmp_common",
             settings={
                 "server": "rtmps://live-api-s.facebook.com:443/rtmp/",
+                "key": stream_url.split("/")[-1],  # Extract the stream key (the part after '/rtmp/')   
             }
         ))
 
@@ -43,19 +44,17 @@ def update_obs_stream_settings(stream_url):
 
         # Start streaming
         client.call(requests.StartStreaming())  # Start streaming
-        time.sleep(5)  # Wait 5 seconds
+        time.sleep(8)  # Wait 5 seconds
 
 
         status = client.call(requests.GetStreamingStatus())  # Check if streaming started
 
         # Debugging - Print full response
-        print("DEBUG: OBS Streaming Status Response:", status.datain)
+        print("DEBUG: OBS Streaming Status Response:", json.dumps(status.datain, indent=2))
 
         # Safely check if 'outputActive' exists
         is_streaming = status.datain.get("outputActive", "Field Missing")  
 
-        # Safely check if 'outputActive' exists
-        is_streaming = status.datain.get("outputActive", "Field Missing")
 
         # print("OBS Streaming Status:", status.getOutputActive())
 
