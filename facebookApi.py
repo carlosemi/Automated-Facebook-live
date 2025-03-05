@@ -103,7 +103,14 @@ def brodcast_live_video():
 
 
 # stream_url, stream_key = get_facebook_stream_key()
+<<<<<<< HEAD
 # print(f"Stream URL: {stream_url}")
 # print(f"Stream Key: {stream_key}")
 
 # brodcast_live_video()
+=======
+# stream_key = get_facebook_stream_key()
+
+# print(f"Stream URL: {stream_url}")
+# print(f"Stream Key: {stream_key}")
+>>>>>>> d2a601b (Commit from facebook comp)

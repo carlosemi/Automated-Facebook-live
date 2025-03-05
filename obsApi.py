@@ -12,8 +12,25 @@ OBS_HOST = os.getenv("OBS_HOST")
 OBS_PORT = int(os.getenv("OBS_PORT"))  # Convert to integer
 # OBS_PASSWORD = os.getenv("OBS_PASSWORD")
 
+<<<<<<< HEAD
 def update_obs_stream_settings(stream_url):
+=======
+def update_obs_stream_settings(stream_key):
+>>>>>>> d2a601b (Commit from facebook comp)
     client = obsws(OBS_HOST, OBS_PORT)
+
+    # try:
+    #     print("🔗 Connecting to OBS WebSocket...")
+    #     client.connect()
+    #     print("✅ Successfully connected to OBS WebSocket!")
+
+    #     status = client.call(requests.GetStreamingStatus())
+    #     print("🔍 OBS Streaming Status Response:", status.datain)
+
+    # except Exception as e:
+    #     print(f"❌ OBS WebSocket Connection Error: {e}")
+    # finally:
+    #     client.disconnect()
     
     try:
         client.connect()
@@ -31,8 +48,25 @@ def update_obs_stream_settings(stream_url):
         # Start streaming
         client.call(requests.StartStreaming())  # Start streaming
         time.sleep(5)  # Wait 5 seconds
-        status = client.call(requests.GetStreamingStatus())  # Check if streaming
-        print("OBS Streaming Status:", status.getOutputActive())
+
+
+        status = client.call(requests.GetStreamingStatus())  # Check if streaming started
+
+        # Debugging - Print full response
+        print("DEBUG: OBS Streaming Status Response:", status.datain)
+
+        # Safely check if 'outputActive' exists
+        is_streaming = status.datain.get("outputActive", "Field Missing")  
+
+        # Safely check if 'outputActive' exists
+        is_streaming = status.datain.get("outputActive", "Field Missing")
+
+        # print("OBS Streaming Status:", status.getOutputActive())
+
+        if is_streaming == "Field Missing":
+            print("⚠️ WARNING: 'outputActive' not found in OBS response. Is OBS streaming?")
+        else:
+            print("✅ OBS Streaming Status:", is_streaming)
 
 
     except Exception as e:
@@ -51,10 +85,18 @@ def update_obs_stream_settings(stream_url):
 
 
 # Get new stream key
+<<<<<<< HEAD
 secure_stream_url = brodcast_live_video()
 
 # Update OBS settings and start streaming
 if secure_stream_url:
     update_obs_stream_settings(secure_stream_url)
+=======
+stream_key = get_facebook_stream_key()
+
+# Update OBS settings and start streaming
+if stream_key:
+    update_obs_stream_settings( stream_key)
+>>>>>>> d2a601b (Commit from facebook comp)
 else:
     print("Failed to retrieve Facebook Live stream key.")
