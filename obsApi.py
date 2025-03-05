@@ -12,11 +12,7 @@ OBS_HOST = os.getenv("OBS_HOST")
 OBS_PORT = int(os.getenv("OBS_PORT"))  # Convert to integer
 # OBS_PASSWORD = os.getenv("OBS_PASSWORD")
 
-<<<<<<< HEAD
 def update_obs_stream_settings(stream_url):
-=======
-def update_obs_stream_settings(stream_key):
->>>>>>> d2a601b (Commit from facebook comp)
     client = obsws(OBS_HOST, OBS_PORT)
 
     # try:
@@ -85,18 +81,10 @@ def update_obs_stream_settings(stream_key):
 
 
 # Get new stream key
-<<<<<<< HEAD
 secure_stream_url = brodcast_live_video()
 
 # Update OBS settings and start streaming
 if secure_stream_url:
     update_obs_stream_settings(secure_stream_url)
-=======
-stream_key = get_facebook_stream_key()
-
-# Update OBS settings and start streaming
-if stream_key:
-    update_obs_stream_settings( stream_key)
->>>>>>> d2a601b (Commit from facebook comp)
 else:
     print("Failed to retrieve Facebook Live stream key.")
