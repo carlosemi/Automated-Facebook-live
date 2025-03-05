@@ -51,22 +51,15 @@ def get_facebook_stream_key():
             print("⚠️ No secure stream URL found in API response.")
             return None
 
-        # Extract the stream key (the part after '/rtmp/')
-        stream_key = stream_url.split("/")[-1]
+    # Extract the stream key (the part after '/rtmp/')
+    stream_key = stream_url.split("/")[-1]
 
-        return stream_key
+    return stream_key
 
-        # stream_url = data.get("stream_url")
-        # stream_key = data.get("stream_key")
+    # stream_url = data.get("stream_url")
+    # stream_key = data.get("stream_key")
 
-        # return stream_url, stream_key
-
-
-    # stream_url, stream_key = get_facebook_stream_key()
-    stream_key = get_facebook_stream_key()
-
-    # print(f"Stream URL: {stream_url}")
-    print(f"Stream Key: {stream_key}")
+    # return stream_url, stream_key
     '''
 
 
@@ -87,7 +80,7 @@ def brodcast_live_video():
     response = requests.post(url, params=params)
     data = response.json()
 
-    print("Full API Response:", json.dumps(data, indent=2))  # Debugging line
+    # print("Full API Response:", json.dumps(data, indent=2))  # Debugging line
 
     if "error" in data:
         print("Error starting live video broadcast:", data["error"]["message"])
@@ -96,12 +89,10 @@ def brodcast_live_video():
     print("🎥 Live video broadcast started successfully.")
 
     secure_stream_url = data.get("secure_stream_url")
-    stream_key = data.get("stream_key")
 
     print(f"Stream URL: {secure_stream_url}")
-    print(f"Stream Key: {stream_key}")
 
-    return stream_key
+    return secure_stream_url
 
 
 ###########################################################################
