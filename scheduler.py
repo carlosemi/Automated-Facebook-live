@@ -7,7 +7,7 @@ def run_script():
     subprocess.run(["python", "obs_connect.py"])
 
 # Schedule the script to run daily at 7:05 AM
-schedule.every().day.at("16:38").do(run_script)
+schedule.every().day.at("16:45").do(run_script)
 
 while True:
     schedule.run_pending()
