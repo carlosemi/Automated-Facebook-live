@@ -14,6 +14,7 @@ OBS_PORT = int(os.getenv("OBS_PORT"))  # Convert to integer
 # OBS_PASSWORD = os.getenv("OBS_PASSWORD")
 
 def update_obs_stream_settings(stream_url):
+
     client = obsws(OBS_HOST, OBS_PORT)
 
     # try:
@@ -30,8 +31,12 @@ def update_obs_stream_settings(stream_url):
     #     client.disconnect()
     
     try:
+
+        print("🔗 Connecting to OBS WebSocket...")
+
         client.connect()
         
+        print("🚀 Setting OBS Stream Key...")
         # Set new stream key in OBS
         client.call(requests.SetStreamSettings(
             type="rtmp_common",
@@ -41,28 +46,38 @@ def update_obs_stream_settings(stream_url):
             }
         ))
 
-        print("✅ OBS Stream settings updated.")
+        print("✅ OBS Stream Key Set.")
+
+        time.sleep(3)
+
+        print("✅ Starting OBS Stream...")
 
         # Start streaming
         client.call(requests.StartStreaming())  # Start streaming
-        time.sleep(8)  # Wait 5 seconds
+        time.sleep(15)  # Wait 5 seconds
 
 
-        status = client.call(requests.GetStreamingStatus())  # Check if streaming started
+        print("🔍 Checking OBS Streaming Status...")
 
-        # Debugging - Print full response
-        print("DEBUG: OBS Streaming Status Response:", json.dumps(status.datain, indent=2))
+        # Subscribe to streaming status updates
+        client.call(requests.SetCurrentScene(scene_name="Scene"))  # Set scene to force update
+        client.call(requests.SetHeartbeat(True))  # Request regular status updates
 
-        # Safely check if 'outputActive' exists
-        is_streaming = status.datain.get("outputActive", "Field Missing")  
+        time.sleep(2)  # Allow time for OBS to update status
 
+        # status = client.call(requests.GetStreamingStatus()) 
+        # print("DEBUG: OBS Streaming Status Response:", status.datain)
 
-        # print("OBS Streaming Status:", status.getOutputActive())
+        # Check if OBS is streaming
+        try:
+            status = client.call(requests.GetStreamingStatus())
+            print("DEBUG: OBS Streaming Status Response:", status.datain)
+            is_streaming = status.getOutputActive() if hasattr(status, "getOutputActive") else "Field Missing"
+        except Exception as e:
+            print(f"❌ OBS Error: {e}")
+            is_streaming = "Failed"
 
-        if is_streaming == "Field Missing":
-            print("⚠️ WARNING: 'outputActive' not found in OBS response. Is OBS streaming?")
-        else:
-            print("✅ OBS Streaming Status:", is_streaming)
+        print("✅ OBS Streaming Status:", is_streaming)
 
 
     except Exception as e:
