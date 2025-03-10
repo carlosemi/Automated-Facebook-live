@@ -6,3 +6,7 @@
 .env.test.local
 .env.production.local
 
+# Ignore the database
+schedule.py 
+
+dist/ 

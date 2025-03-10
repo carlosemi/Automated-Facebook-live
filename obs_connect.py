@@ -59,6 +59,8 @@ async def send_obs_command(command, params={}):
         print(f"🔍 OBS Response ({command}): {json.dumps(response_json, indent=2)}")
         return response_json
 
+
+
 ###########################################################################
 #                                                                         #
 #                        Get Facebook Stream Key                          #
@@ -86,17 +88,21 @@ async def authenticate(websocket):
         auth_confirm = await websocket.recv()
         print("✅ Authenticated with OBS")
 
+
+
 ###########################################################################
 #                                                                         #
-#                        Set OBS Stream Settings                          #
+#                  Set OBS Stream Settings & Stream                       #
 #                                                                         #
 ###########################################################################
 
 async def update_obs_stream_settings(stream_url):
     """Updates the OBS stream key and starts the stream."""
+
     stream_key = stream_url.split("/")[-1]  # Extract the stream key
 
     print("🚀 Setting OBS Stream Key...")
+
     await send_obs_command("SetStreamServiceSettings", {
         "streamServiceType": "rtmp_common",
         "streamServiceSettings": {
