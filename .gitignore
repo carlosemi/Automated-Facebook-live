@@ -7,7 +7,7 @@
 .env.production.local
 
 # Ignore the database
-schedule.py 
+schedule.db 
 
 dist/ 
 build/
