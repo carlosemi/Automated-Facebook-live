@@ -64,6 +64,16 @@ def run_script():
     # Adjust the path/command as needed
     subprocess.run(["python", "obs_connect.py"])
 
+def end_obs_stream():
+    """
+    This is the function that schedule will call each day at the specified time.
+    Replace the placeholder logic with your actual OBS automation call or script.
+    """
+    print("Ending OBS stream...")
+    # Example: call a separate Python script
+    # Adjust the path/command as needed
+    subprocess.run(["python", "obs_end_stream.py"])
+
 def load_schedules_from_db():
     """
     Clear the current schedule and re-add jobs based on what's in the database.
@@ -74,6 +84,20 @@ def load_schedules_from_db():
         schedule_time = row[1]  # 'HH:MM'
         # Add a daily schedule for each time
         schedule.every().day.at(schedule_time).do(run_script)
+        
+        hour =schedule_time.split(":")[0]
+        minute = schedule_time.split(":")[1]
+
+        end_hour = (int(hour) + 7) % 24
+        end_minute = (int(minute) + 50) % 60
+
+        # sheduled_end = f'{int(hour)+7}:{minute}'
+        scheduled_end = f'{int(end_hour):02d}:{int(end_minute):02d}'
+
+        print(f"End time: {scheduled_end}")
+
+        # Automatically end the stream after 7 hours 59 minutes
+        schedule.every().day.at(scheduled_end).do(end_obs_stream)
 
 def schedule_loop():
     """

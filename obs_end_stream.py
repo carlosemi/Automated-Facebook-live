@@ -20,7 +20,13 @@ async def end_obs_stream():
     response = await send_obs_command("StopStream")
     await asyncio.sleep(5)  # Give OBS time to stop
 
-    if response.get("d", {}).get("requestStatus", {}).get("code") == 100:
-        print("✅ OBS Stream Ended Successfully!")
-    else:
-        print("❌ OBS StopStream Command Failed!")
+
+    print("Response: ", response)   
+    # if response.get("d", {}).get("requestStatus", {}).get("code") == 100:
+    #     print("✅ OBS Stream Ended Successfully!")
+    # else:
+    #     print("❌ OBS StopStream Command Failed!")
+
+
+# Run the main function
+asyncio.run(end_obs_stream())

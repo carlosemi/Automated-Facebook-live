@@ -116,10 +116,10 @@ async def update_obs_stream_settings(stream_url):
     response = await send_obs_command("StartStream")
     await asyncio.sleep(5)  # Give OBS time to start
 
-    if response.get("d", {}).get("requestStatus", {}).get("code") == 100:
-        print("✅ OBS Stream Started Successfully!")
-    else:
-        print("❌ OBS StartStream Command Failed!")
+    # if response.get("d", {}).get("requestStatus", {}).get("code") == 100:
+    #     print("✅ OBS Stream Started Successfully!")
+    # else:
+    #     print("❌ OBS StartStream Command Failed!")
 
     time.sleep(5)  # Give OBS time to start streaming
 
@@ -129,10 +129,10 @@ async def update_obs_stream_settings(stream_url):
     # Extracting outputActive correctly for OBS 5+
     is_streaming = status.get("d", {}).get("outputActive", False)
 
-    if is_streaming:
-        print("✅ OBS is Streaming!")
-    else:
-        print("❌ OBS is NOT Streaming!")
+    # if is_streaming:
+    #     print("✅ OBS is Streaming!")
+    # else:
+    #     print("❌ OBS is NOT Streaming!")
 
 
 ###########################################################################
