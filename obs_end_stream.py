@@ -4,7 +4,7 @@ import json
 import os
 import time
 from dotenv import load_dotenv
-from facebookApi import brodcast_live_video  # Import your Facebook Live function
+from facebook_connect import brodcast_live_video  # Import your Facebook Live function
 from obs_connect import send_obs_command
 
 ###########################################################################

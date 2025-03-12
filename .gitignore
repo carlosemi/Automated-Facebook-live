@@ -11,3 +11,6 @@ schedule.db
 
 dist/ 
 build/
+
+gui.spec
+__pycache__/

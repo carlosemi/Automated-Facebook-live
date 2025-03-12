@@ -4,7 +4,7 @@ import json
 import os
 import time
 from dotenv import load_dotenv
-from facebookApi import brodcast_live_video  # Import your Facebook Live function
+from facebook_connect import brodcast_live_video  # Import your Facebook Live function
 
 # Load environment variables
 load_dotenv()
