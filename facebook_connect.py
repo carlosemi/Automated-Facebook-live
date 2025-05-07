@@ -42,7 +42,7 @@ def get_facebook_stream_key():
         print("Error: Stream URL not found in response.")
         return None, None
     
-    return stream_key
+    return secure_stream_url
 
     '''
     stream_url = data.get("stream_url")
